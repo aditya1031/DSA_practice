@@ -80,7 +80,7 @@ vector<int> findErrorNums3(vector<int> &nums)
 
 
 
-vector<int> findErrorNums2(vector<int> &nums)
+vector<int> findErrorNums4(vector<int> &nums)
 {
      
         // size of the array
