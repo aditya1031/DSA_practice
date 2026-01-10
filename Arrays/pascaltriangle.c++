@@ -102,12 +102,6 @@ vector<int> pascalBrute_rowprint2(int rowIndex)
 
 
 
-
-
-
-
-
-
 vector<int> pascalTriBRute(int rowIndex)  //TC - O(n^3)
 //SC-O(n^2)
 {

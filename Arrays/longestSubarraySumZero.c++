@@ -3,10 +3,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int subarryBrute(vector<int> &nums) // TC O(n^2)
-{                                   // SC = O(1)
+/*
+---------------------------------------------------------
+Brute Force Approach
+Find length of longest subarray with sum = 0
+TC = O(n^2)
+SC = O(1)
+---------------------------------------------------------
+*/
+int subarryBrute(vector<int> &nums)
+{
      int n = nums.size();
      int mxaLen = 0;
+
      for (int i = 0; i < n; i++)
      {
           int sum = 0;
@@ -15,6 +24,7 @@ int subarryBrute(vector<int> &nums) // TC O(n^2)
           {
                sum += nums[j];
 
+               // if subarray sum becomes zero
                if (sum == 0)
                {
                     mxaLen = max(mxaLen, j - i + 1);
@@ -24,24 +34,37 @@ int subarryBrute(vector<int> &nums) // TC O(n^2)
      return mxaLen;
 }
 
-int subArrayOptimal(vector<int> &nums) // TC O(n) , SC O(n)
+/*
+---------------------------------------------------------
+Optimal Approach (Prefix Sum + Hashing)
+TC = O(n)
+SC = O(n)
+---------------------------------------------------------
+*/
+int subArrayOptimal(vector<int> &nums)
 {
      int n = nums.size();
      int maxLen = 0;
      int sum = 0;
+
+     // map stores first occurrence of prefix sum
      unordered_map<int, int> mpp;
 
      for (int i = 0; i < n; i++)
      {
           sum += nums[i];
+
+          // if prefix sum is zero
           if (sum == 0)
           {
                maxLen = i + 1;
           }
+          // if same prefix sum seen before
           else if (mpp.find(sum) != mpp.end())
           {
                maxLen = max(maxLen, i - mpp[sum]);
           }
+          // store first occurrence of prefix sum
           else
           {
                mpp[sum] = i;
@@ -54,13 +77,14 @@ int main()
 {
      int n;
      cin >> n;
+
      vector<int> arr(n);
      for (int i = 0; i < n; i++)
      {
           cin >> arr[i];
      }
 
-     subarryBrute(arr);
+     subarryBrute(arr); // result not printed (same as original)
 
      return 0;
 }

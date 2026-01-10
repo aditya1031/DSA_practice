@@ -1,13 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n) // TC: O(m + n)
-{                                                                            // SC: O(m + n)  (extra temp array)
-
+/*
+---------------------------------------------------------
+Brute Force Merge of Two Sorted Arrays
+Uses extra temporary array
+TC = O(m + n)
+SC = O(m + n)
+---------------------------------------------------------
+*/
+vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n)
+{
      int index = 0;
-     vector<int> temp(m + n);
+     vector<int> temp(m + n);   // temporary array to store merged result
      int left = 0;
      int right = 0;
+
+     // Merge two sorted arrays
      while (left < m && right < n)
      {
           if (nums1[left] <= nums2[right])
@@ -24,6 +33,7 @@ vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n) // 
           }
      }
 
+     // Copy remaining elements of nums1
      while (left < m)
      {
           temp[index] = nums1[left];
@@ -31,6 +41,7 @@ vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n) // 
           index++;
      }
 
+     // Copy remaining elements of nums2
      while (right < n)
      {
           temp[index] = nums2[right];
@@ -38,6 +49,7 @@ vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n) // 
           index++;
      }
 
+     // Copy merged result back to nums1
      for (int i = 0; i < m + n; i++)
      {
           nums1[i] = temp[i];
@@ -46,20 +58,19 @@ vector<int> mergeBrute(vector<int> &nums1, int m, vector<int> &nums2, int n) // 
      return nums1;
 }
 
-// Time Complexity (TC):
-// O(m log m + n log n)
-//  - swapping loop: O(min(m, n))
-//  - sort first m elements of nums1: O(m log m)
-//  - sort nums2: O(n log n)
-//  - copy loop: O(n)
-
-// Space Complexity (SC):
-// O(1)
-//  - no extra array used (ignoring recursion stack of sort)
+/*
+---------------------------------------------------------
+Better In-place Method (Swap + Sort)
+TC = O(m log m + n log n)
+SC = O(1)  (ignoring recursion stack of sort)
+---------------------------------------------------------
+*/
 vector<int> mergeOptimal1(vector<int> &nums1, int m, vector<int> &nums2, int n)
 {
-     int left = m - 1; // first arr last element
-     int right = 0;    // second arr first element
+     int left = m - 1; // last valid element of nums1
+     int right = 0;   // first element of nums2
+
+     // Swap larger elements of nums1 with smaller elements of nums2
      while (left >= 0 && right < n)
      {
           if (nums1[left] > nums2[right])
@@ -73,10 +84,12 @@ vector<int> mergeOptimal1(vector<int> &nums1, int m, vector<int> &nums2, int n)
                break;
           }
      }
-     sort(nums1.begin(), nums1.end() + m);
 
+     // Sort both arrays again
+     sort(nums1.begin(), nums1.end() + m);
      sort(nums2.begin(), nums2.end());
 
+     // Copy nums2 elements to nums1
      for (int i = m; i < m + n; i++)
      {
           nums1[i] = nums2[i - m];
@@ -85,15 +98,20 @@ vector<int> mergeOptimal1(vector<int> &nums1, int m, vector<int> &nums2, int n)
      return nums1;
 }
 
-// Gap method  - from shell sort
-
+/*
+---------------------------------------------------------
+Optimal In-place Merge (Two Pointers from End)
+TC = O(m + n)
+SC = O(1)
+---------------------------------------------------------
+*/
 vector<int> mergeOptimal2(vector<int> &nums1, int m, vector<int> &nums2, int n)
 {
+     int left = m - 1;          // last index of nums1
+     int right = n - 1;        // last index of nums2
+     int arr = m + n - 1;      // last index of nums1 including extra space
 
-     int left = m - 1;    // last index for array1
-     int right = n - 1;   // last index for array2
-     int arr = m + n - 1; // last index for array1 including zero placeholder ex:{1,2,3,0,0,0,0}
-
+     // Merge from the end
      while (left >= 0 && right >= 0)
      {
           if (nums1[left] > nums2[right])
@@ -102,20 +120,23 @@ vector<int> mergeOptimal2(vector<int> &nums1, int m, vector<int> &nums2, int n)
                arr--;
                left--;
           }
-          else{
-               nums1[arr]=nums2[right];
+          else
+          {
+               nums1[arr] = nums2[right];
                arr--;
                right--;
           }
      }
 
-     while (right>=0)
+     // Copy remaining elements of nums2 (if any)
+     while (right >= 0)
      {
-          nums1[arr]=nums2[right];
+          nums1[arr] = nums2[right];
           arr--;
           right--;
      }
-     
+
+     return nums1;
 }
 
 int main()
