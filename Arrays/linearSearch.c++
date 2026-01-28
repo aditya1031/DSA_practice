@@ -1,49 +1,50 @@
-// aditya kumar
-// 21bcs9520
+#include <iostream>
+#include <algorithm>
+#include <vector>
 
-#include <bits/stdc++.h>
 using namespace std;
 
-int search(int arr[], int n, int no)
+/*
+ LINEAR SEARCH
+ Idea:
+ 1. Traverse the array from start to end
+ 2. Compare each element with target
+ 3. If found, return its index
+ 4. If not found, return -1
+
+ Time Complexity: O(n)
+ Space Complexity: O(1)
+*/
+int LinearSearch(vector<int>& nums, int ele)
 {
-
-    for (int i = 0; i < n; i++)
-    {
-        if(arr[i]==no)
-        {
-            return i;
-            break;
-        }
-    }
-    return -1;
-
+     for (int i = 0; i < nums.size(); i++)
+     {
+          if (nums[i] == ele)
+          {
+               return i; // element found
+          }
+     }
+     return -1; // element not found
 }
 
 int main()
 {
-    int n;
-    cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
+     int n;
+     cout << "enter the size of the array : ";
+     cin >> n;
 
-    int no;
+     vector<int> arr(n);
+     cout << "enter the array elements :\n";
+     for (int i = 0; i < n; i++)
+     {
+          cin >> arr[i];
+     }
 
-    cout << "Enter the no you want to search :" << endl;
-    cin >> no;
+     int D;
+     cout << "enter the element you want to search : ";
+     cin >> D;
 
-    int ans;
-    ans=search(arr,n,no);
+     int ans = LinearSearch(arr, D);
 
-    if(ans==-1)
-    {
-        cout<<" given number is not present in the array"<<endl;
-    }
-    else{
-        cout<<"given number is  present in the array at "<< ans<<" index" <<endl;
-    }
-
-    return 0;
+     cout << "your element exists at index : " << ans;
 }

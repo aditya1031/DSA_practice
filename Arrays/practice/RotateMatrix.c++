@@ -3,83 +3,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-==================== BRUTE FORCE ROTATION (Using Extra Matrix) ====================
-
-Idea:
-- Create a temporary matrix `tempM`
-- Place element matrix[i][j] to its rotated position:
-      tempM[j][n - i - 1] = matrix[i][j]
-- Copy tempM back to matrix
-
-This rotates the matrix by 90 degrees clockwise.
-
-Time Complexity (TC):
-- Filling temp matrix: O(n^2)
-- Copying back: O(n^2)
-=> TC = O(n^2)
-
-Space Complexity (SC):
-- Extra matrix of size n x n
-=> SC = O(n^2)
-*/
-void rotateBrute(vector<vector<int>> &matrix)
+void rotateBrtue(vector<vector<int>> &matrix) // tc O(2n^2)
+// SC O(n^2)
 {
+     if (matrix.empty())
+          return;
      int n = matrix.size();
 
-     vector<vector<int>> tempM(n, vector<int>(n));
-
+     vector<vector<int>> Ans(n, vector<int>(n));
      for (int i = 0; i < n; i++)
      {
           for (int j = 0; j < n; j++)
           {
-               // placing element in rotated position
-               tempM[j][n - i - 1] = matrix[i][j];
+               Ans[j][(n - 1) - i] = matrix[i][j];
           }
      }
 
-     // copying rotated matrix back
      for (int i = 0; i < n; i++)
      {
           for (int j = 0; j < n; j++)
           {
-               matrix[i][j] = tempM[i][j];
+               matrix[i][j] = Ans[i][j];
           }
      }
 }
 
-/*
-==================== OPTIMAL ROTATION (In-Place) ====================
-
-Idea:
-1. Transpose the matrix (swap across diagonal)
-2. Reverse each row
-
-This achieves 90-degree clockwise rotation without extra space.
-
-Time Complexity (TC):
-- Transpose: O(n^2)
-- Reverse rows: O(n^2)
-=> TC = O(n^2)
-
-Space Complexity (SC):
-- No extra matrix used
-=> SC = O(1)
-*/
-void rotateBrute(vector<vector<int>> &matrix)
+void rotateOptimal(vector<vector<int>> &matrix) // tc O(n^2)
+// SC O(1)
 {
+     if (matrix.empty())
+          return;
      int n = matrix.size();
 
-     // Step 1: Transpose matrix
-     for (int i = 0; i < n; i++)
+     // Step 1: Transpose  O(n*n/2) tc
+     for (int i = 0; i < n - 1; i++)
      {
           for (int j = i + 1; j < n; j++)
           {
-               swap(matrix[i][j], matrix[j][i]);
+               if (i != j)
+               {
+                    swap(matrix[i][j], matrix[j][i]);
+               }
           }
      }
+     // Step 2: Reverse each row  o(n*n/2) tc
 
-     // Step 2: Reverse each row
      for (int i = 0; i < n; i++)
      {
           reverse(matrix[i].begin(), matrix[i].end());
@@ -88,26 +56,42 @@ void rotateBrute(vector<vector<int>> &matrix)
 
 int main()
 {
-     int m, n; // m = rows, n = columns
-     cin >> n;
+     int n, m;
+     cout << "Enter number of rows and columns: ";
+     cin >> n >> m;
 
-     vector<vector<int>> arr(n, vector<int>(n));
+     vector<vector<int>> matrix(n, vector<int>(m));
 
+     cout << "Enter matrix elements:\n";
      for (int i = 0; i < n; i++)
      {
-          for (int j = 0; j < n; j++)
+          for (int j = 0; j < m; j++)
           {
-               cin >> arr[i][j];
+               cin >> matrix[i][j];
           }
      }
 
-     cout << "the rotated matrix : ";
-     for (int i = 0; i < m; i++)
+     // Print the matrix to check input
+     cout << "Matrix entered:\n";
+     for (int i = 0; i < n; i++)
      {
-          for (int j = 0; j < n; j++)
+          for (int j = 0; j < m; j++)
           {
-               cout << arr[i][j];
+               cout << matrix[i][j] << " ";
           }
+          cout << "\n";
      }
+
+     rotateOptimal(matrix);
+     cout << "Matrix rotated:\n";
+     for (int i = 0; i < n; i++)
+     {
+          for (int j = 0; j < m; j++)
+          {
+               cout << matrix[i][j] << " ";
+          }
+          cout << "\n";
+     }
+
      return 0;
 }

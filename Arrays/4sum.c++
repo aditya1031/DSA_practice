@@ -4,33 +4,27 @@
 using namespace std;
 
 /*
----------------------------------------------------------
-Brute Force 4-Sum
-TC = O(n^4)
-SC = O(2 * Q)
-Q = number of unique quadruplets
----------------------------------------------------------
+ Brute Force 4Sum
+ TC: O(n^4)
+ SC: O(k)  (k = number of unique quadruplets)
 */
-vector<vector<int>> foursumBrute(vector<int> &nums, int target)
+vector<vector<int>> sumBrute(vector<int> &nums, int target)
 {
-     int count = nums.size();
-     set<vector<int>> st; // store unique quadruplets
+     int n = nums.size();
+     vector<vector<int>> Ans;
+     set<vector<int>> st;
 
-     for (int i = 0; i < count; i++)
+     for (int i = 0; i < n; i++)
      {
-          for (int j = i + 1; j < count; j++)
+          for (int j = i + 1; j < n; j++)
           {
-               for (int k = j + 1; k < count; k++)
+               for (int k = j + 1; k < n; k++)
                {
-                    for (int l = k + 1; l < count; l++)
+                    for (int l = k + 1; l < n; l++)
                     {
-                         long long sum =
-                             (long long)nums[i] + nums[j] + nums[k] + nums[l];
-
-                         if (sum == target)
+                         if ((long long)nums[i] + nums[j] + nums[k] + nums[l] == target)
                          {
-                              vector<int> temp =
-                                  {nums[i], nums[j], nums[k], nums[l]};
+                              vector<int> temp = {nums[i], nums[j], nums[k], nums[l]};
                               sort(temp.begin(), temp.end());
                               st.insert(temp);
                          }
@@ -39,39 +33,33 @@ vector<vector<int>> foursumBrute(vector<int> &nums, int target)
           }
      }
 
-     vector<vector<int>> ans(st.begin(), st.end());
-     return ans;
+     Ans = {st.begin(), st.end()};
+     return Ans;
 }
 
 /*
----------------------------------------------------------
-Better Approach (Hashing)
-TC = O(n^3 * logM)
-SC = O(N) + O(2 * Q)
----------------------------------------------------------
+ Better 4Sum using Hashing
+ TC: O(n^3)
+ SC: O(n + k)
 */
-vector<vector<int>> foursumBetter(vector<int> &nums, int target)
+vector<vector<int>> sumBetter(vector<int> &nums, int target)
 {
-     int count = nums.size();
+     int n = nums.size();
+     vector<vector<int>> Ans;
      set<vector<int>> st;
 
-     for (int i = 0; i < count; i++)
+     for (int i = 0; i < n; i++)
      {
-          for (int j = i + 1; j < count; j++)
+          for (int j = i + 1; j < n; j++)
           {
-               set<long long> hashset; // stores visited nums[k]
-
-               for (int k = j + 1; k < count; k++)
+               set<int> hashset;
+               for (int k = j + 1; k < n; k++)
                {
-                    long long sum =
-                        (long long)nums[i] + nums[j] + nums[k];
-
-                    long long fourth = target - sum;
+                    long long fourth = target - ((long long)nums[i] + nums[j] + nums[k]);
 
                     if (hashset.find(fourth) != hashset.end())
                     {
-                         vector<int> temp =
-                             {nums[i], nums[j], nums[k], (int)fourth};
+                         vector<int> temp = {nums[i], nums[j], nums[k], (int)fourth};
                          sort(temp.begin(), temp.end());
                          st.insert(temp);
                     }
@@ -81,70 +69,59 @@ vector<vector<int>> foursumBetter(vector<int> &nums, int target)
           }
      }
 
-     vector<vector<int>> ans(st.begin(), st.end());
-     return ans;
+     Ans = {st.begin(), st.end()};
+     return Ans;
 }
 
 /*
----------------------------------------------------------
-Optimal Approach (Sorting + Two Pointers)
-TC = O(n^3)
-SC = O(M)   [only to store answer]
----------------------------------------------------------
+ Optimal 4Sum (Sorting + Two Pointers)
+ TC: O(n^3)
+ SC: O(1)  (excluding output)
 */
-vector<vector<int>> foursumOptimal(vector<int> &nums, int target)
+vector<vector<int>> sumOptimal(vector<int> &nums, int target)
 {
      int n = nums.size();
+     vector<vector<int>> Ans;
      sort(nums.begin(), nums.end());
-     vector<vector<int>> ans;
 
      for (int i = 0; i < n; i++)
      {
-          // skip duplicate first element
-          if (i > 0 && nums[i] == nums[i - 1])
-               continue;
+          if (i > 0 && nums[i] == nums[i - 1]) continue;
 
           for (int j = i + 1; j < n; j++)
           {
-               // skip duplicate second element
-               if (j != i + 1 && nums[j] == nums[j - 1])
-                    continue;
+               if (j > i + 1 && nums[j] == nums[j - 1]) continue;
 
-               int k = j + 1;
-               int l = n - 1;
+               int left = j + 1;
+               int right = n - 1;
 
-               while (k < l)
+               while (left < right)
                {
                     long long sum =
-                        (long long)nums[i] + nums[j] + nums[k] + nums[l];
+                         (long long)nums[i] + nums[j] + nums[left] + nums[right];
 
                     if (sum == target)
                     {
-                         ans.push_back(
-                             {nums[i], nums[j], nums[k], nums[l]});
-                         k++;
-                         l--;
+                         Ans.push_back({nums[i], nums[j], nums[left], nums[right]});
+                         left++;
+                         right--;
 
-                         // skip duplicate third element
-                         while (k < l && nums[k] == nums[k - 1])
-                              k++;
-
-                         // skip duplicate fourth element
-                         while (k < l && nums[l] == nums[l + 1])
-                              l--;
+                         while (left < right && nums[left] == nums[left - 1]) left++;
+                         while (left < right && nums[right] == nums[right + 1]) right--;
                     }
                     else if (sum < target)
                     {
-                         k++;
+                         left++;
                     }
                     else
                     {
-                         l--;
+                         right--;
                     }
                }
           }
      }
-     return ans;
+
+     return Ans;
 }
 
 int main()
@@ -158,18 +135,21 @@ int main()
           cin >> arr[i];
      }
 
-     int k;
-     cin >> k;
-vector<vector<int>> res = foursumOptimal(arr, k);
+     int target;
+     cin >> target;
 
-for (auto &quad : res)
-{
-     for (int x : quad)
+     // choose which method you want
+     vector<vector<int>> ans = sumOptimal(arr, target);
+
+     // print result
+     for (auto &quad : ans)
      {
-          cout << x << " ";
+          for (int x : quad)
+          {
+               cout << x << " ";
+          }
+          cout << "\n";
      }
-     cout << endl;
-}
 
      return 0;
 }
