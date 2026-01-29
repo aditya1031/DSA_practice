@@ -6,7 +6,7 @@ using namespace std;
 ----------------------------------------
 BRUTE FORCE – TWO SUM
 ----------------------------------------
-Works for: ✅ Positive + Negative
+Works for:  Positive + Negative
 Idea:
 - Check all pairs (i, j)
 
@@ -34,7 +34,7 @@ vector<int> TwoSum(vector<int> &nums, int T)
 ----------------------------------------
 BETTER – HASHING
 ----------------------------------------
-Works for: ✅ Positive + Negative
+Works for:  Positive + Negative
 Idea:
 - Store elements in hashmap
 - For each element, check (T - current)
@@ -64,7 +64,7 @@ vector<int> TwoSum_better(vector<int> &nums, int T)
 ----------------------------------------
 TWO POINTER – EXISTENCE CHECK
 ----------------------------------------
-Works for: ⚠️ SORTED ARRAY ONLY
+Works for: SORTED ARRAY ONLY
 Returns: true / false (not indices)
 
 Time Complexity (TC): O(n)
