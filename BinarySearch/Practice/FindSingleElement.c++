@@ -46,9 +46,9 @@ int findSingleBrute2(vector<int> &nums)
      int n = nums.size();
      int ans = 0;
 
-     for (int i = 0; i < n; i++)
+     for (auto x : nums)
      {
-          ans = ans ^ nums[i];
+          ans = ans ^ x;
      }
 
      return ans;

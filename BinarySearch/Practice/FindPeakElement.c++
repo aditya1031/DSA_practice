@@ -37,7 +37,7 @@ int peakOptimal(vector<int> &nums)
 
      int low = 1;
      int high = n - 2;
-     
+
      while (low <= high)
      {
           int mid = (low + high) / 2;
@@ -45,7 +45,7 @@ int peakOptimal(vector<int> &nums)
           {
                return mid;
           }
-          else if (nums[mid] > nums[mid-1])
+          else if (nums[mid] > nums[mid - 1])
           {
                low = mid + 1;
           }
