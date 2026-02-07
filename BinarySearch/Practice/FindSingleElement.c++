@@ -23,7 +23,7 @@ int findSingleBrute(vector<int> &nums)
 
           else if (i == n - 1)
           {
-               if (nums[i] != nums[i - 1])
+               if (nums[i] != nums[i - 2])
                {
                     return nums[i];
                }

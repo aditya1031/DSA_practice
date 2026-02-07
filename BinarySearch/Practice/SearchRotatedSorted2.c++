@@ -37,6 +37,7 @@ bool BinarySearch(vector<int> &nums, int k)
           {
                return true;
           }
+          
           if (nums[low] == nums[mid] && nums[mid] == nums[high])
           {
                low++;

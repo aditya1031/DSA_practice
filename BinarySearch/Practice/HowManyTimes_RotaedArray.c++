@@ -64,7 +64,7 @@ int rotatedOptimal(vector<int> &nums)
           else
           {
                ans = mid;
-               high = mid ;
+               high = mid - 1;
           }
      }
      return ans;

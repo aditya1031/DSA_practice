@@ -32,13 +32,14 @@ int binarySearchIterate(vector<int> &nums, int k)
 }
 
 // TC = O(log N)
-// SC = O(N)
+// SC = O(log N)
+
 int binarySearchRecursive(vector<int> &nums, int low, int high, int k)
 {
      if (low > high)
           return -1;
 
-     int mid = (low + high) / 2;
+  int mid = low + (high - low) / 2;
 
      if (nums[mid] == k)
      {
@@ -53,7 +54,7 @@ int binarySearchRecursive(vector<int> &nums, int low, int high, int k)
      {
           return binarySearchRecursive(nums, low, mid - 1, k);
      }
-     return -1;
+   
 }
 
 int main()
