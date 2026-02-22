@@ -38,7 +38,7 @@ int sqrtOptimal(int x)
                ans = mid;
                low = mid + 1;
           }
-          else if (mid * mid > x)
+          else 
           {
                high = mid - 1;
           }
