@@ -2,6 +2,8 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+
+
 // TC= O(m*N)
 int rootBrute(int N, int M)
 {
@@ -43,6 +45,8 @@ int rootBrute(int N, int M)
 //      return -1;
 // }
 
+
+
 // TC = O(log N )
 int rootOptimal(int N, int M)
 {
@@ -74,6 +78,8 @@ int rootOptimal(int N, int M)
      }
      return -1;
 }
+
+
 
 int main()
 {

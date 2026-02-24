@@ -63,7 +63,7 @@ int eatingOptimal(vector<int> &nums, int h)
           }
      }
 
-     return -1;
+     return ans;
 }
 
 int main()
