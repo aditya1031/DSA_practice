@@ -10,11 +10,11 @@ double K_th_Element(vector<int> &nums1, vector<int> &nums2, int k)
      int n = n1 + n2;
      if (n1 > n2)
      {
-          return K_th_Element(nums2, nums1,k);
+          return K_th_Element(nums2, nums1, k);
      }
 
-     int low = max(0,k-n2);
-     int high = min(k,n1);
+     int low = max(0, k - n2);
+     int high = min(k, n1);
      int left = k;
 
      while (low <= high)
