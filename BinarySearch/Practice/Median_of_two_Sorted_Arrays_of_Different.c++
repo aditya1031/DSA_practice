@@ -51,7 +51,7 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
      int left = 0;
      int right = 0;
 
-     int el1 = NULL, el2 = NULL;
+     int el1 = -1, el2 = -1;
      int mid2 = N / 2;
      int mid1 = (N - 1) / 2;
      int count = 0;
@@ -110,12 +110,12 @@ double findMedianSortedArraysOptimal(vector<int> &nums1, vector<int> &nums2)
 {
      int n1 = nums1.size();
      int n2 = nums2.size();
-     int n = n1 + n2;
      if (n1 > n2)
      {
           return findMedianSortedArraysOptimal(nums2, nums1);
      }
 
+     int n = n1 + n2;
      int low = 0;
      int high = n1;
      int left = (n1 + n2 + 1) / 2;
@@ -149,7 +149,7 @@ double findMedianSortedArraysOptimal(vector<int> &nums1, vector<int> &nums2)
                {
                     return max(l1, l2);
                }
-               return (double)(max(l1, l2) + min(r1, r2)) / 2.0;
+               return (double)(max(l1, l2) +  (double)min(r1, r2)) / 2.0;
           }
           else if (l1 > r2)
           {
