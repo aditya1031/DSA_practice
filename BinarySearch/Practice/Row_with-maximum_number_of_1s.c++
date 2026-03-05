@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int maxRow(vector<vector<int>> &matrix)
+int maxRowBrute(vector<vector<int>> &matrix)
 {
      if (matrix.empty())
           return -1;
@@ -51,7 +51,7 @@ int lowerBound(vector<int> &arr, int x)
      return ans;
 }
 
-int maxRow(vector<vector<int>> &matrix)
+int maxRowOptimal(vector<vector<int>> &matrix)
 {
      if (matrix.empty())
           return -1;
