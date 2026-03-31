@@ -65,6 +65,6 @@ bool isAnagramOptimal(string s, string t)
 
 int main()
 {
-     cout << isAnagram("anagram", "nagaram"); // true
+     cout << isAnagramOptimal("anagram", "nagaram"); // true
      return 0;
 }
