@@ -8,7 +8,7 @@ using namespace std;
 Function: printNth_elementBasic
 Purpose : Returns the value of nCr (nth row, rth column)
 Approach: Optimized nCr using iterative multiplication
-Time    : O(r)
+Time    : O(r) 
 Space   : O(1)
 -----------------------------------------
 */
