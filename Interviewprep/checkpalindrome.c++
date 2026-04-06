@@ -1,23 +1,39 @@
-#include <iostream>
- using namespace std;
+#include <bits/stdc++.h>
+using namespace std;
 
- int main(){
-    string name ="aditya";
-    string rev;
-    for (int i = name.length()-1; i >=0; i--)
+string reverseStringBrute(string s)
+{
+  reverse(s.begin(), s.end());
+  return s;
+}
+
+
+string reverseStringBetter(string s)
+{
+    string rev="";
+    for(int i=s.size()-1;i>=0;i--)
     {
-        rev=rev+name[i];
+      rev+=s[i];
     }
-  cout<<rev;  
+    return rev;
+}
 
-  if (name==rev)
+string reverseStringOptimal(string s)
+{
+  int l = 0;
+  int r = s.size() - 1;
+  while (l < r)
+  {
+    swap(s[l],s[r]);
+    l++;
+    r--;
+  }
+  return s;
+}
 
-  {
-  cout<<"ispalidrome";  /* code */
-  }
-  else
-  {
-    cout<<"not";
-  }
-  
- }
+int main()
+{
+  string name = "aditya";
+  cout << reverseStringOptimal(name);
+  return 0;
+}
