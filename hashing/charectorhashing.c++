@@ -27,6 +27,6 @@ int main()
 
         // fetch
         cout << "the number in arr accured by:";
-        cout << hash(unsigned char)[ch] << endl;
+        cout << hash[(unsigned char)ch] << endl;
     }
 }
