@@ -44,11 +44,104 @@ void printDLL(Node *head)
           cout << head->data << " ";
           head = head->next;
      }
+     cout << endl;
 }
 
+Node *deleteHead(Node *head)
+{
+     if (head == NULL || head->next == NULL)
+     {
+          return NULL;
+     }
+     Node *prev = head;
+     head = head->next;
+     head->back = nullptr;
+     prev->next = nullptr;
+     delete prev;
 
+     return head;
+}
 
+Node *deleteTail(Node *head)
+{
+     if (head == NULL || head->next == NULL)
+     {
+          return NULL;
+     }
+     Node *tail = head;
+     while (tail->next != NULL)
+     {
+          tail = tail->next;
+     }
+     Node *newTail = tail->back;
+     newTail->next = nullptr;
+     tail->back = nullptr;
+     delete tail;
 
+     return head;
+}
+
+Node *deleteKth(Node *head, int k)
+{
+     Node *temp = head;
+     int cnt = 0;
+     while (temp != NULL)
+     {
+          cnt++;
+          if (cnt == k)
+          {
+               break;
+          }
+          temp = temp->next;
+     }
+     Node *prev = temp->back;
+     Node *front = temp->next;
+
+     if (prev == NULL && front == NULL)
+     {
+          delete temp;
+          return NULL;
+     }
+     else if (prev == NULL)
+     {
+          return deleteHead(head);
+     }
+     else if (front == NULL)
+     {
+          return deleteTail(head);
+     }
+     else
+     {
+          prev->next = front;
+          front->back = prev;
+
+          temp->next = nullptr;
+          temp->back = nullptr;
+          delete temp;
+     }
+     return head;
+}
+
+void deleteNode(Node *temp)
+{
+     Node *prev = temp->back;
+     Node *front = temp->next;
+     if (front == NULL)
+     {
+          prev->next = nullptr;
+          temp->back = nullptr;
+          delete temp;
+     }
+     else
+     {
+          prev->next = front;
+          front->back = prev;
+
+          temp->next = nullptr;
+          temp->back = nullptr;
+          delete temp;
+     }
+}
 
 int main()
 {
@@ -56,5 +149,18 @@ int main()
 
      Node *head1 = convertArr2DLL(arr);
      printDLL(head1);
+
+     head1 = deleteHead(head1);
+     printDLL(head1);
+
+     head1 = deleteTail(head1);
+     printDLL(head1);
+
+     head1 = deleteKth(head1, 2);
+     printDLL(head1);
+
+     deleteNode(head1->next);
+     printDLL(head1);
+
      return 0;
 }
