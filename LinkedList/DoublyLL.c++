@@ -136,11 +136,67 @@ void deleteNode(Node *temp)
      {
           prev->next = front;
           front->back = prev;
-
           temp->next = nullptr;
           temp->back = nullptr;
           delete temp;
      }
+}
+
+Node *insertNodeBeforeHead(Node *head, int val)
+{
+     Node *newHead = new Node(val, head, nullptr);
+     head->back = newHead;
+     return newHead;
+}
+
+Node *insertNodeBeforeTail(Node *head, int val)
+{
+     if (head->next = NULL)
+     {
+          return insertNodeBeforeHead(head, val);
+     }
+
+     Node *tail;
+     while (tail->next != NULL)
+     {
+          tail = tail->next;
+     }
+     Node *prev = tail->back;
+     Node *newNode = new Node(val, tail, prev);
+
+     prev->next = newNode;
+     tail->back = newNode;
+     return head;
+}
+
+Node *insertNodeBeforeKth(Node *head, int val, int k)
+{
+     int cnt = 0;
+     Node *temp = head;
+     while (temp != NULL)
+     {
+          cnt++;
+          if (cnt == k)
+          {
+               break;
+          }
+          temp = temp->next;
+     }
+
+     Node *prev = temp->back;
+     Node *newNode = new Node(val, temp, prev);
+
+     prev->next = newNode;
+     temp->back = newNode;
+     return head;
+}
+
+void insertNodeBeforeNode(Node *node, int val)
+{
+     Node *prev = node->back;
+     Node *newNode = new Node(val, node, prev);
+     prev->next = newNode;
+     node->back = newNode;
 }
 
 int main()
@@ -150,16 +206,28 @@ int main()
      Node *head1 = convertArr2DLL(arr);
      printDLL(head1);
 
-     head1 = deleteHead(head1);
+     // head1 = deleteHead(head1);
+     // printDLL(head1);
+
+     // head1 = deleteTail(head1);
+     // printDLL(head1);
+
+     // head1 = deleteKth(head1, 2);
+     // printDLL(head1);
+
+     // deleteNode(head1->next);
+     // printDLL(head1);
+
+     // head1 = insertNodeBeforeHead(head1, 100);
+     // printDLL(head1);
+
+     // head1 = insertNodeBeforeTail(head1, 100);
+     // printDLL(head1);
+
+     head1 = insertNodeBeforeKth(head1, 100, 4);
      printDLL(head1);
 
-     head1 = deleteTail(head1);
-     printDLL(head1);
-
-     head1 = deleteKth(head1, 2);
-     printDLL(head1);
-
-     deleteNode(head1->next);
+     insertNodeBeforeNode(head1->next->next, 100);
      printDLL(head1);
 
      return 0;
